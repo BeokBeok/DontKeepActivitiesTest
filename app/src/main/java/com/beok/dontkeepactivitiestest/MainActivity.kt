@@ -2,6 +2,8 @@ package com.beok.dontkeepactivitiestest
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import com.beok.dontkeepactivitiestest.databinding.ActivityMainBinding
 
@@ -18,10 +20,31 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("beokbeok", "onCreate")
 
         setupBinding()
         setupUI()
         setupListener()
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        Log.d("beokbeok", "onRestoreInstanceState")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("beokbeok", "onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("beokbeok", "onPause")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("beokbeok", "onDestroy")
     }
 
     private fun setupListener() {
