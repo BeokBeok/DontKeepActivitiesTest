@@ -22,6 +22,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Log.d("beokbeok", "onCreate")
 
+        Log.d("beokbeok", "MainActivity is $this")
+        Log.d("beokbeok", "oneFragment is $oneFragment")
+        Log.d("beokbeok", "twoFragment is $twoFragment")
+        Log.d("beokbeok", "threeFragment is $threeFragment")
+        Log.d("beokbeok", "fourFragment is $fourFragment")
+
         setupBinding()
         setupUI()
         setupListener()
@@ -40,6 +46,11 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         Log.d("beokbeok", "onPause")
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Log.d("beokbeok", "onSaveInstanceState")
     }
 
     override fun onDestroy() {
