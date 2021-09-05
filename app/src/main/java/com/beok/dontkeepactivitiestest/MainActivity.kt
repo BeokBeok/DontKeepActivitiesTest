@@ -2,7 +2,6 @@ package com.beok.dontkeepactivitiestest
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import com.beok.dontkeepactivitiestest.databinding.ActivityMainBinding
@@ -17,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private val fourFragment = FourFragment()
 
     private var currentFragment: Fragment = oneFragment
+    private var selectId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,9 @@ class MainActivity : AppCompatActivity() {
         Log.d("beokbeok", "fourFragment is $fourFragment")
 
         setupBinding()
+        removeAllFragmentIfPossible(savedInstanceState)
         setupUI()
+        selectTab(selectId)
         setupListener()
     }
 
@@ -51,6 +53,7 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         Log.d("beokbeok", "onSaveInstanceState")
+        outState.putInt("selectId", binding.bnvMain.selectedItemId)
     }
 
     override fun onDestroy() {
@@ -58,14 +61,30 @@ class MainActivity : AppCompatActivity() {
         Log.d("beokbeok", "onDestroy")
     }
 
+    private fun selectTab(itemId: Int) {
+        when (itemId) {
+            R.id.item_bottom_navigation_one -> showFragment(oneFragment)
+            R.id.item_bottom_navigation_two -> showFragment(twoFragment)
+            R.id.item_bottom_navigation_three -> showFragment(threeFragment)
+            R.id.item_bottom_navigation_four -> showFragment(fourFragment)
+        }
+    }
+
+    private fun removeAllFragmentIfPossible(savedInstanceState: Bundle?) {
+        if (savedInstanceState != null) {
+            supportFragmentManager.fragments.forEach {
+                supportFragmentManager
+                    .beginTransaction()
+                    .remove(it)
+                    .commitNow()
+            }
+            selectId = savedInstanceState.getInt("selectId")
+        }
+    }
+
     private fun setupListener() {
         binding.bnvMain.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.item_bottom_navigation_one -> showFragment(oneFragment)
-                R.id.item_bottom_navigation_two -> showFragment(twoFragment)
-                R.id.item_bottom_navigation_three -> showFragment(threeFragment)
-                R.id.item_bottom_navigation_four -> showFragment(fourFragment)
-            }
+            selectTab(it.itemId)
             true
         }
     }
@@ -98,7 +117,7 @@ class MainActivity : AppCompatActivity() {
                 if (supportFragmentManager.findFragmentByTag(OneFragment.TAG) == null) {
                     add(R.id.fl_main, oneFragment, OneFragment.TAG)
                 }
-                commitAllowingStateLoss()
+                commit()
             }
     }
 
