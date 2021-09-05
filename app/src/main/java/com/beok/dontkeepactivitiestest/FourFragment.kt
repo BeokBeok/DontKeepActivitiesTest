@@ -21,6 +21,21 @@ class FourFragment : Fragment() {
         return binding.root
     }
 
+    override fun onPause() {
+        super.onPause()
+        Log.d("beokbeok", "onPause: Four")
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Log.d("beokbeok", "onSaveInstanceState: Four")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("beokbeok", "onStop: Four")
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         Log.d("beokbeok", "onDestroyView: Four")

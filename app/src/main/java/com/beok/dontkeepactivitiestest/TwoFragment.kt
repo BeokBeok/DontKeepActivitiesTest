@@ -21,6 +21,21 @@ class TwoFragment : Fragment() {
         return binding.root
     }
 
+    override fun onPause() {
+        super.onPause()
+        Log.d("beokbeok", "onPause: Two")
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Log.d("beokbeok", "onSaveInstanceState: Two")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("beokbeok", "onStop: Two")
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         Log.d("beokbeok", "onDestroyView: Two")

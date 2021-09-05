@@ -21,6 +21,21 @@ class OneFragment : Fragment() {
         return binding.root
     }
 
+    override fun onPause() {
+        super.onPause()
+        Log.d("beokbeok", "onPause: One")
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Log.d("beokbeok", "onSaveInstanceState: One")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("beokbeok", "onStop: One")
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         Log.d("beokbeok", "onDestroyView: One")

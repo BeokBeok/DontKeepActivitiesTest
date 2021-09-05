@@ -21,6 +21,21 @@ class ThreeFragment : Fragment() {
         return binding.root
     }
 
+    override fun onPause() {
+        super.onPause()
+        Log.d("beokbeok", "onPause: Three")
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Log.d("beokbeok", "onSaveInstanceState: Three")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("beokbeok", "onStop: Three")
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         Log.d("beokbeok", "onDestroyView: Three")
