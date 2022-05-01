@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.beok.dontkeepactivitiestest.databinding.FragmentThreeBinding
 
+/**
+ * 라이트 | 다크모드 테스트
+ */
 class ThreeFragment : Fragment() {
 
     private lateinit var binding: FragmentThreeBinding
@@ -18,6 +21,12 @@ class ThreeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentThreeBinding.inflate(layoutInflater)
+        binding.btnLight.setOnClickListener {
+            ThemeUtil.applyTheme(ThemeType.LIGHT_MODE)
+        }
+        binding.btnDark.setOnClickListener {
+            ThemeUtil.applyTheme(ThemeType.DARK_MODE)
+        }
         return binding.root
     }
 

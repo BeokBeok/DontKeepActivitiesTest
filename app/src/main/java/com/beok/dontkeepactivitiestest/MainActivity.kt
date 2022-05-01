@@ -16,8 +16,6 @@ class MainActivity : AppCompatActivity() {
     private val threeFragment = ThreeFragment()
     private val fourFragment = FourFragment()
 
-    private var currentFragment: Fragment = oneFragment
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("beokbeok", "onCreate")
@@ -43,40 +41,9 @@ class MainActivity : AppCompatActivity() {
         Log.d("beokbeok", "onResume")
     }
 
-    override fun onPause() {
-        super.onPause()
-        Log.d("beokbeok", "onPause")
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        Log.d("beokbeok", "onSaveInstanceState")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("beokbeok", "onDestroy")
-    }
-
-    private fun setupListener() {
-        binding.bnvMain.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.item_bottom_navigation_one -> showFragment(oneFragment)
-                R.id.item_bottom_navigation_two -> showFragment(twoFragment)
-                R.id.item_bottom_navigation_three -> showFragment(threeFragment)
-                R.id.item_bottom_navigation_four -> showFragment(fourFragment)
-            }
-            true
-        }
-    }
-
-    private fun showFragment(fragment: Fragment) {
-        supportFragmentManager
-            .beginTransaction()
-            .hide(currentFragment)
-            .show(fragment)
-            .commitAllowingStateLoss()
-        currentFragment = fragment
+    private fun setupBinding() {
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 
     private fun setupUI() {
@@ -102,8 +69,49 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    private fun setupBinding() {
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    private fun setupListener() {
+        binding.bnvMain.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.item_bottom_navigation_one -> showFragment(OneFragment.TAG)
+                R.id.item_bottom_navigation_two -> showFragment(TwoFragment.TAG)
+                R.id.item_bottom_navigation_three -> showFragment(ThreeFragment.TAG)
+                R.id.item_bottom_navigation_four -> showFragment(FourFragment.TAG)
+            }
+            true
+        }
     }
+
+    private fun showFragment(tag: String) {
+        hideAllFragments()
+
+        supportFragmentManager
+            .beginTransaction()
+            .show(supportFragmentManager.findFragmentByTag(tag) as Fragment)
+            .commitAllowingStateLoss()
+    }
+
+    private fun hideAllFragments(){
+        supportFragmentManager.fragments.forEach {
+            it?.let {
+                supportFragmentManager.beginTransaction().hide(it).commit()
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("beokbeok", "onPause")
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Log.d("beokbeok", "onSaveInstanceState")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("beokbeok", "onDestroy")
+    }
+
+
 }
